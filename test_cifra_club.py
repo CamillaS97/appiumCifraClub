@@ -74,15 +74,28 @@ class TestCifraClub(unittest.TestCase):
         WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_element_located((AppiumBy.ID, 'com.studiosol.cifraclub:id/songListenLayout')))
         settings_btn = self.driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="Settings")
         settings_btn.click()
-        capo_option = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,
-                                  value="new UiSelector().className(\"android.widget.RelativeLayout\").instance(17)")
+        capo_option = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,value='new UiSelector().text("Capo")')
         capo_option.click()
-        WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().text(\"1st fret\")")))
-        fret_option = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"1st fret\")")
+        WebDriverWait(self.driver, self.wait_time).until(
+            EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().text(\"1st fret\")")))
+        fret_option = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,
+                                               value="new UiSelector().text(\"1st fret\")")
         fret_option.click()
         ok_btn = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/positiveBt")
         ok_btn.click()
+        settings_btn = self.driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="Settings")
         settings_btn.click()
-        capo_check = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR, value="new UiSelector().text(\"Capo: 1st fret\")")
+        capo_check = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,
+                                              value="new UiSelector().text(\"Capo: 1st fret\")")
         self.assertEqual("Capo: 1st fret", capo_check.text)
 
+    def test_04_change_tone(self):
+        tone_options = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/songToneTxt")
+        tone_options.click()
+        WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_element_located((AppiumBy.ID, "com.studiosol.cifraclub:id/tone7")))
+        chosen_tone = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/tone7")
+        chosen_tone.click()
+        ok_btn = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/positiveBt")
+        ok_btn.click()
+        updated_result = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/songToneTxt")
+        self.assertEqual("TONE: E", updated_result.text)
