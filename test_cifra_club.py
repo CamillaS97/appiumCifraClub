@@ -44,14 +44,14 @@ class TestCifraClub(unittest.TestCase):
         search_btn = self.driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="Search")
         search_btn.click()
         # Digita o nome da música e clica no primeiro resultado
-        WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_element_located((AppiumBy.CLASS_NAME, "android.widget.EditText")))
+        element_exist(self.driver, (AppiumBy.CLASS_NAME, "android.widget.EditText"))
         self.driver.find_element(by=AppiumBy.CLASS_NAME, value="android.widget.EditText").send_keys("Hotel California")
-        WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_element_located((AppiumBy.XPATH, '(//android.widget.RelativeLayout[@resource-id="com.studiosol.cifraclub:id/cellClickableArea"])[1]/android.widget.LinearLayout')))
+        element_exist(self.driver, (AppiumBy.XPATH, '(//android.widget.RelativeLayout[@resource-id="com.studiosol.cifraclub:id/cellClickableArea"])[1]/android.widget.LinearLayout'))
         choose_song = self.driver.find_element(by=AppiumBy.XPATH,
                                   value='(//android.widget.RelativeLayout[@resource-id="com.studiosol.cifraclub:id/cellClickableArea"])[1]/android.widget.LinearLayout')
         choose_song.click()
         # Assert para garantir que a música foi de fato selecionada
-        WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_element_located((AppiumBy.ID, 'com.studiosol.cifraclub:id/songListenLayout')))
+        element_exist(self.driver, (AppiumBy.ID, 'com.studiosol.cifraclub:id/songListenLayout'))
         song_title = self.driver.find_element(by=AppiumBy.XPATH, value='//android.widget.TextView[@text="Hotel California"]')
         self.assertEqual("Hotel California", song_title.text)
 
@@ -63,8 +63,7 @@ class TestCifraClub(unittest.TestCase):
         # Acessa o seletor de capotraste e seleciona a opção "1st fret" 
         capo_option = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,value='new UiSelector().text("Capo")')
         capo_option.click()
-        WebDriverWait(self.driver, self.wait_time).until(
-            EC.presence_of_element_located((AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().text(\"1st fret\")")))
+        element_exist(self.driver, (AppiumBy.ANDROID_UIAUTOMATOR, "new UiSelector().text(\"1st fret\")"))
         fret_option = self.driver.find_element(by=AppiumBy.ANDROID_UIAUTOMATOR,
                                                value="new UiSelector().text(\"1st fret\")")
         fret_option.click()
@@ -84,7 +83,7 @@ class TestCifraClub(unittest.TestCase):
         tone_options = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/songToneTxt")
         tone_options.click()
         # Acessa o seletor de tonalidade da cifra e seleciona a opção "TONE: E"
-        WebDriverWait(self.driver, self.wait_time).until(EC.presence_of_element_located((AppiumBy.ID, "com.studiosol.cifraclub:id/tone7")))
+        element_exist(self.driver, (AppiumBy.ID, "com.studiosol.cifraclub:id/tone7"))
         chosen_tone = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/tone7")
         chosen_tone.click()
         ok_btn = self.driver.find_element(by=AppiumBy.ID, value="com.studiosol.cifraclub:id/positiveBt")
